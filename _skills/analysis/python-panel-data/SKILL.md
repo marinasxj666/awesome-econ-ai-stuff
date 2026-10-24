@@ -1,6 +1,6 @@
 ---
 name: python-panel-data
-description: Panel data analysis with Python using linearmodels and pandas.
+description: "Panel regressions in Python with linearmodels (PanelOLS, entity and time effects, clustered SEs) when the analysis must stay in Python. When Stata is the target use stata-regression; for other Python estimators, large files or text models use xjs-python-data."
 workflow_stage: analysis
 compatibility:
   - claude-code

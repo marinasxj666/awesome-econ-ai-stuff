@@ -1,6 +1,6 @@
 ---
 name: econ-visualization
-description: Create publication-quality charts and graphs for economics papers.
+description: "Chart design for economics papers: plot type, axis and label conventions, figure sizing and export for LaTeX. Use when a figure's look is the question. For the Python plotting code use xjs-python-data; for color systems use dataviz."
 workflow_stage: communication
 compatibility:
   - claude-code

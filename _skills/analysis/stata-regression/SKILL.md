@@ -1,6 +1,6 @@
 ---
 name: stata-regression
-description: Run regression analyses in Stata with publication-ready output tables.
+description: "Stata regression code scaffolds: reghdfe, xtreg, clustered SEs, eststo/esttab loops, basic robustness. Use for writing or debugging the do-file. Not for the delivered table layout or results workbook (use xjs-data-output), nor for method recipes from JAR replication files (use stata-accounting-research)."
 workflow_stage: analysis
 compatibility:
   - claude-code
@@ -86,7 +86,7 @@ reghdfe y x1 x2 x3, absorb(firm_id year) vce(cluster firm_id)
 eststo model2
 
 * Export table
-esttab model1 model2 using "results/regression_table.tex", replace se label
+esttab model1 model2 using "2_result/tables/regression_table.tex", replace se label
 ```
 
 ## Requirements
@@ -105,6 +105,46 @@ Install with:
 ```stata
 ssc install estout
 ssc install reghdfe
+```
+
+## Permutation Grids (User Rule — Binding)
+
+When the user asks for results across permutations of specifications —
+control sets, fixed-effects structures, clustering levels, alternative
+designs, alternative variable definitions — that request IS the spec:
+
+1. **Run the full grid, every combination named.** Do not prune to a subset
+   you consider informative; cherry-picking permutations is as wrong as
+   adding unrequested ones. Conversely, do not add specifications beyond the
+   grid without asking.
+2. **Deliver one consolidated table built for comparison** — a single
+   `esttab` with one column per specification, never a scatter of separate
+   tables the user has to line up.
+3. **Label every column with its exact spec** (controls, FE, clustering,
+   variable definition, sample) using indicator rows, and always report N
+   per column; the user requires N and fixed effects confirmed for every
+   regression.
+4. **For large grids, state the count and estimated runtime first** (e.g.,
+   4 control sets x 3 FE x 2 clusterings = 24 regressions), then run all of
+   it on confirmation.
+
+```stata
+* --- permutation grid: loop over the full requested spec set ---
+eststo clear
+local spec = 0
+foreach fe in "firm_id" "firm_id year" "firm_id industry#year" {
+    foreach cl in firm_id industry {
+        local ++spec
+        eststo m`spec': reghdfe y x1 x2 x3, absorb(`fe') vce(cluster `cl')
+        estadd local fe_used "`fe'"
+        estadd local cluster_used "`cl'"
+    }
+}
+esttab m* using "2_result/tables/spec_grid.tex", replace se label ///
+    scalars("fe_used Fixed effects" "cluster_used Clustered by" "N Observations") ///
+    mtitles
+
+di as result "GRID DONE: `spec' specifications estimated"
 ```
 
 ## Best Practices
@@ -126,6 +166,10 @@ ssc install reghdfe
 - [estout documentation](https://repec.sowi.unibe.ch/stata/estout/)
 
 ## Changelog
+
+### v1.1.0
+
+- Add binding permutation-grid rule: run the full requested spec grid, one consolidated esttab, spec labels + N per column
 
 ### v1.0.0
 

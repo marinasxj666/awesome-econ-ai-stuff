@@ -1,6 +1,6 @@
 ---
 name: research-ideation
-description: Generate research questions from economic phenomena
+description: "Generate candidate research questions from an economic phenomenon, policy change or new dataset, after the xijiang-research-workflow intake has run. Not a substitute for that intake and not for literature positioning (use xijiang-lit-review)."
 workflow_stage: ideation
 compatibility:
   - claude-code

@@ -1,6 +1,6 @@
 ---
 name: stata-data-cleaning
-description: Clean and transform messy data in Stata with reproducible workflows
+description: "Stata cleaning recipes: duplicates, string and date fixes, reshape, merge diagnostics with match counts, label hygiene, reproducible do-file structure. Not for regressions or tables (use stata-regression, xjs-data-output)."
 workflow_stage: data
 compatibility:
   - claude-code

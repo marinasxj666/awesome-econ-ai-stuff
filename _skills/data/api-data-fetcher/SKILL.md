@@ -1,6 +1,6 @@
 ---
 name: api-data-fetcher
-description: Fetch economic data from FRED, World Bank, and other APIs
+description: "Pull macro and country series from FRED or World Bank APIs into Python with a reproducible script. Only these two sources. For any other website, HTML table, PDF or API use xjs-web-scrape; for SEC EDGAR or WRDS use the data-sources reference in xijiang-research-workflow."
 workflow_stage: data
 compatibility:
   - claude-code
