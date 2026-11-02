@@ -1,6 +1,6 @@
 ---
 name: academic-paper-writer
-description: Draft economics papers with proper structure and academic style
+description: "Skeleton-first drafting of a new economics paper section from an outline or bullet notes when no draft exists yet. Not for prose in Xijiang's voice (use xijiang-voice), revising an existing draft (use prose-revision), or the full paper pipeline (use academic-paper)."
 workflow_stage: writing
 compatibility:
   - claude-code

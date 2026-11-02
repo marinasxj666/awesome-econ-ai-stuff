@@ -1,6 +1,6 @@
 ---
 name: lit-review-assistant
-description: Search, summarize, and synthesize economics literature
+description: "Generic literature search and paper-by-paper summaries on an economics topic when no own idea is being positioned. For positioning Xijiang's idea, novelty checks or 'has anyone done this' use xijiang-lit-review."
 workflow_stage: literature
 compatibility:
   - claude-code

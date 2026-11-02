@@ -1,6 +1,6 @@
 ---
 name: latex-tables
-description: Generate publication-ready regression tables in LaTeX.
+description: "Turn existing regression output (esttab .tex or .csv) into a clean booktabs LaTeX table with notes and stars. Use only after the numbers exist. Column order and the esttab-style layout come from xjs-data-output; the Stata code from stata-regression."
 workflow_stage: writing
 compatibility:
   - claude-code
@@ -103,6 +103,36 @@ R-squared & 0.18 & 0.24 & 0.31 \\
 - `booktabs`
 - `threeparttable` (optional for notes)
 
+## Permutation Grids (User Rule — Binding)
+
+When the results being formatted come from a requested permutation of
+specifications (control sets, fixed effects, clustering, designs, variable
+definitions), the table must give a clear side-by-side picture:
+
+1. **One consolidated table** holding the whole grid — never split the
+   permutations across separate tables the user has to line up. If the grid
+   is too large for one page, use a spec-curve figure or a landscape/small
+   font table instead of splitting; tables must never break across pages.
+2. **Every column identified by its exact spec** via indicator rows
+   (Controls / Fixed effects / Clustered by / Variable definition / Sample),
+   so no column's spec has to be inferred from the caption.
+3. **Observations reported in every column** — N is mandatory per the user's
+   standing verification rule.
+4. **Include every specification that was run.** Dropping columns because
+   they look redundant or unfavorable misrepresents the grid; the user asked
+   for all of it.
+
+```latex
+% spec-grid skeleton: indicator rows identify each column's specification
+\midrule
+Controls        & No     & Base   & Base   & Full   \\
+Fixed Effects   & Firm   & Firm+Yr& Ind$\times$Yr & Ind$\times$Yr \\
+Clustered by    & Firm   & Firm   & Firm   & Industry \\
+Outcome def.    & A      & A      & B      & B      \\
+\midrule
+Observations    & 2,145  & 2,145  & 2,101  & 2,101  \\
+```
+
 ## Best Practices
 
 1. **Keep tables compact** and readable
@@ -121,6 +151,10 @@ R-squared & 0.18 & 0.24 & 0.31 \\
 - [AEA Author Guidelines](https://www.aeaweb.org/journals/policies/author-instructions)
 
 ## Changelog
+
+### v1.1.0
+
+- Add binding permutation-grid rule: one consolidated table for the full grid, spec-indicator rows, N in every column, no page breaks
 
 ### v1.0.0
 

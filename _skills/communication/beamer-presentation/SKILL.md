@@ -1,6 +1,6 @@
 ---
 name: beamer-presentation
-description: Create academic presentations in Beamer with professional themes
+description: "Generic LaTeX Beamer decks for research talks, seminars and conferences, including turning a paper into a talk. Not for the ACTG 3110 course decks, which follow teaching-slides."
 workflow_stage: communication
 compatibility:
   - claude-code
